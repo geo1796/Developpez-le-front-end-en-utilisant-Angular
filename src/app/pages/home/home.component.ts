@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -11,7 +11,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 export class HomeComponent implements OnDestroy {
   public olympics: Olympic[] = [];
   private sub: Subscription;
-
+  
   constructor(private olympicService: OlympicService) {
     this.sub = olympicService.olympics.subscribe(olympics => this.olympics = olympics);
   }
@@ -19,4 +19,13 @@ export class HomeComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
+
+  get data(): {"name": string, "value": number}[] {
+    return this.olympics.map(olympic => {
+      var totalMedals = 0;
+      olympic.participations.forEach(participation => totalMedals += participation.medalsCount);
+      return {"name": olympic.country, "value": totalMedals};
+    });
+  }
+
 }

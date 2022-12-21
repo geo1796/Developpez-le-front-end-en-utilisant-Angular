@@ -1,3 +1,6 @@
 <h2>Olympic games app</h2>
 <hr />
-<p>{{ olympics.length }} data loaded</p>
+<div>
+    <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [arcWidth]="2" [animations]="false">
+    </ngx-charts-pie-chart>
+</div>

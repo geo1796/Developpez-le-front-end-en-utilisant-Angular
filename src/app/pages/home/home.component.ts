@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
+import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
@@ -7,12 +8,15 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+export class HomeComponent implements OnDestroy {
+  public olympics: Olympic[] = [];
+  private sub: Subscription;
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService) {
+    this.sub = olympicService.olympics.subscribe(olympics => this.olympics = olympics);
+  }
 
-  ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

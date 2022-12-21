@@ -1,6 +1,29 @@
 <h2>Olympic games app</h2>
 <hr />
+<div class="row justify-content-center mt-5">
+    <div class="col-6">
+        <p class="title ">Medals per Country</p>
+    </div>
+</div>
+<div class="row justify-content-center mx-5">
+    <div class="total col-lg-3 p-5 m-3">
+        <p>Number of JOs</p>
+        <br>
+        <p style="font-weight: bold;">{{numberOfJOs}}</p>
+    </div>
+    <div class="total col-lg-3 p-5 m-3">
+        <p>Number of countries</p>
+        <br>
+        <p style="font-weight: bold;">{{numberOfCountries}}</p>
+    </div>
+</div>
 <div>
-    <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [arcWidth]="2" [animations]="false">
+    <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [animations]="false">
+        <ng-template #tooltipTemplate let-model="model">
+            <span style="font-weight: bold; font-size: large;">{{model.name}}</span>
+            <br>
+            <fa-icon [icon]="faMedal" class="p-2" style="font-size: large;"></fa-icon>
+            <span style="font-weight: bold; font-size: large;">{{model.value}}</span>
+        </ng-template>
     </ngx-charts-pie-chart>
 </div>

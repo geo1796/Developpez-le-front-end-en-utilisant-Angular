@@ -1,21 +1,22 @@
-
-<div class="row justify-content-center mt-5 mx-5">
-    <div class="col-6">
-        <p class="title">Medals per Country</p>
+<div *ngIf="!hasError; else errorTemplate">
+    <div class="row justify-content-center mt-5 mx-5">
+        <div class="col-6">
+            <p class="title">Medals per Country</p>
+        </div>
     </div>
-</div>
-<div class="row justify-content-center mx-5">
-    <div class="total col-lg-2 m-3">
-        <p>Number of JOs</p>
-        <p style="font-weight: bold;">{{numberOfJOs}}</p>
+    <div class="row justify-content-center mx-5">
+        <div class="total col-lg-2 m-3">
+            <p>Number of JOs</p>
+            <p style="font-weight: bold;">{{numberOfJOs}}</p>
+        </div>
+        <div class="total col-lg-2 m-3">
+            <p>Number of countries</p>
+            <p style="font-weight: bold;">{{numberOfCountries}}</p>
+        </div>
     </div>
-    <div class="total col-lg-2 m-3">
-        <p>Number of countries</p>
-        <p style="font-weight: bold;">{{numberOfCountries}}</p>
-    </div>
-</div>
-<div>
-        <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [animations]="false" (select)="onSelect($event)">
+    <div>
+        <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [animations]="false"
+            (select)="onSelect($event)">
             <ng-template #tooltipTemplate let-model="model">
                 <span style="font-weight: bold; font-size: large;">{{model.name}}</span>
                 <br>
@@ -23,4 +24,11 @@
                 <span style="font-weight: bold; font-size: large;">{{model.value}}</span>
             </ng-template>
         </ngx-charts-pie-chart>
+    </div>
 </div>
+
+<ng-template #errorTemplate>
+    <div class="center">
+        <h2>Something wrong happened</h2>
+    </div>
+</ng-template>

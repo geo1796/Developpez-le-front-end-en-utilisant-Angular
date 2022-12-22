@@ -13,23 +13,30 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   public faMedal = faMedal;
   public olympics: Olympic[] = [];
-  private sub!: Subscription;
-  
-  constructor(private olympicService: OlympicService, private router: Router) {}
+  private olympicsSub!: Subscription;
+  public hasError: boolean = false;
+  private errorSub!: Subscription;
+
+  constructor(private olympicService: OlympicService, private router: Router) { }
 
   ngOnInit(): void {
-    this.sub = this.olympicService.olympics.subscribe(olympics => this.olympics = olympics);
+    this.olympicsSub = this.olympicService.olympics.subscribe(olympics => this.olympics = olympics);
+    this.errorSub = this.olympicService.hasError.subscribe(hasError => {
+      this.hasError = hasError;
+      console.log(hasError)
+    });
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.olympicsSub.unsubscribe();
+    this.errorSub.unsubscribe();
   }
 
-  get data(): {"name": string, "value": number}[] {
+  get data(): { "name": string, "value": number }[] {
     return this.olympics.map(olympic => {
       var totalMedals = 0;
       olympic.participations.forEach(participation => totalMedals += participation.medalsCount);
-      return {"name": olympic.country, "value": totalMedals};
+      return { "name": olympic.country, "value": totalMedals };
     });
   }
 
@@ -49,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.olympics.length;
   }
 
-  onSelect(country: {"name": string}) {
+  onSelect(country: { "name": string }) {
     this.router.navigateByUrl("/details?country=" + country.name);
   }
 }

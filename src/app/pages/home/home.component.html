@@ -16,7 +16,7 @@
     </div>
 </div>
 <div>
-        <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [animations]="false">
+        <ngx-charts-pie-chart [results]="data" [labels]="true" [trimLabels]="false" [animations]="false" (select)="onSelect($event)">
             <ng-template #tooltipTemplate let-model="model">
                 <span style="font-weight: bold; font-size: large;">{{model.name}}</span>
                 <br>

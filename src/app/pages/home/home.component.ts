@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnDestroy {
   public olympics: Olympic[] = [];
   private sub: Subscription;
   
-  constructor(private olympicService: OlympicService) {
+  constructor(private olympicService: OlympicService, private router: Router) {
     this.sub = olympicService.olympics.subscribe(olympics => this.olympics = olympics);
   }
 
@@ -46,4 +47,7 @@ export class HomeComponent implements OnDestroy {
     return this.olympics.length;
   }
 
+  onSelect(country: {"name": string}) {
+    this.router.navigateByUrl("/details?country=" + country.name);
+  }
 }

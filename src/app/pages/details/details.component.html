@@ -1,1 +1,42 @@
-<p>details works!</p>
+
+<div class="row justify-content-center mx-5">
+    <div class="col" style="text-align: center;"><a routerLink="">Go back</a></div>
+</div>
+
+<div *ngIf="olympic !== undefined">
+    <div class="row justify-content-center mt-5 mx-5">
+        <div class="col-6">
+            <p class="title">{{olympic!.country}}</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mx-5">
+        <div class="total col-lg-3 m-3">
+            <p>Number of entries</p>
+            <p style="font-weight: bold;">{{olympic!.participations.length}}</p>
+        </div>
+        <div class="total col-lg-3 m-3">
+            <p>Total number of medals</p>
+            <p style="font-weight: bold;">{{totalMedals}}</p>
+        </div>
+        <div class="total col-lg-3 m-3">
+            <p>Total number of athletes</p>
+            <p style="font-weight: bold;">{{totalAthletes}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mx-5">
+    <div *ngIf="olympic !== undefined; else olympicNotFound" class="chart">
+        <ngx-charts-line-chart [results]="data" [legend]="false" [showXAxisLabel]="true" xAxisLabel="Dates"
+            [xAxis]="true" [yAxis]="true" [animations]="false">
+        </ngx-charts-line-chart>
+    </div>
+</div>
+
+
+<ng-template #olympicNotFound>
+    <div class="center">
+        <h2>Olympic not found</h2>
+    </div>
+</ng-template>

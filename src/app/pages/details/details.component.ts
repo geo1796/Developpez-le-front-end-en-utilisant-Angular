@@ -11,22 +11,46 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
 
-  private sub!: Subscription;
-  private olympic?: Olympic;
+  private countrySub!: Subscription;
+  private olympicSub!: Subscription;
+  private country: string = "";
+  public olympic?: Olympic;
 
   constructor(private olympicService: OlympicService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.sub = this.route.queryParamMap.subscribe(params => {
+    this.countrySub = this.route.queryParamMap.subscribe(params => {
       const country = params.get("country");
       if (country) {
-        this.olympic = this.olympicService.getOlympicByCountry(country);
+        this.country = country;
       }
     });
+    this.olympicSub = this.olympicService.getOlympicByCountry(this.country)
+      .subscribe(olympic => this.olympic = olympic);
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.countrySub.unsubscribe();
+    this.olympicSub.unsubscribe();
   }
 
+  get data(): { "name": string, "series": { "name": string, "value": number }[] }[] {
+    const series: { "name": string, "value": number }[] = [];
+    this.olympic!.participations.forEach(participation => {
+      series.push({ "name": "" + participation.year, "value": participation.medalsCount });
+    });
+    return [{ "name": this.olympic!.country, "series": series }];
+  }
+
+  get totalMedals(): number {
+    var total = 0;
+    this.olympic!.participations.forEach(participation => total += participation.medalsCount);
+    return total;
+  }
+
+  get totalAthletes(): number {
+    var total = 0;
+    this.olympic!.participations.forEach(participation => total += participation.athleteCount);
+    return total;
+  }
 }

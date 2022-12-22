@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+.center {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.total {
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #0d98ba;
+    text-align: center;
+    font-size: x-large;
+}
+
+p.title {
+    border-radius: 15px;
+    border-style: solid;
+    background-color: #0d98ba;
+    text-align: center;
+    color: white;
+    font-size: x-large;
+}

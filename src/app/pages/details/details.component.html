@@ -1,9 +1,8 @@
-
 <div class="row justify-content-center mx-5">
     <div class="col" style="text-align: center;"><a routerLink="">Go back</a></div>
 </div>
 
-<div *ngIf="olympic !== undefined">
+<div *ngIf="olympic !== undefined; else olympicNotFound">
     <div class="row justify-content-center mt-5 mx-5">
         <div class="col-6">
             <p class="title">{{olympic!.country}}</p>
@@ -23,16 +22,14 @@
             <p>Total number of athletes</p>
             <p style="font-weight: bold;">{{totalAthletes}}</p>
         </div>
+        <div class="chart">
+            <ngx-charts-line-chart [results]="data" [legend]="false" [showXAxisLabel]="true" xAxisLabel="Dates"
+                [xAxis]="true" [yAxis]="true" [animations]="false">
+            </ngx-charts-line-chart>
+        </div>
     </div>
 </div>
 
-<div class="row justify-content-center mx-5">
-    <div *ngIf="olympic !== undefined; else olympicNotFound" class="chart">
-        <ngx-charts-line-chart [results]="data" [legend]="false" [showXAxisLabel]="true" xAxisLabel="Dates"
-            [xAxis]="true" [yAxis]="true" [animations]="false">
-        </ngx-charts-line-chart>
-    </div>
-</div>
 
 
 <ng-template #olympicNotFound>

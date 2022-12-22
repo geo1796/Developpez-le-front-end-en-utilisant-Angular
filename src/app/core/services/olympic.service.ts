@@ -29,4 +29,8 @@ export class OlympicService {
   get olympics() {
     return this.olympics$.asObservable();
   }
+
+  getOlympicByCountry(country: string): Olympic | undefined {
+    return this.olympics$.value.find(olympic => olympic.country === country);
+  }
 }

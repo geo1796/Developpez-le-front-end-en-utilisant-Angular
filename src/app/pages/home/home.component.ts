@@ -10,13 +10,15 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   public faMedal = faMedal;
   public olympics: Olympic[] = [];
-  private sub: Subscription;
+  private sub!: Subscription;
   
-  constructor(private olympicService: OlympicService, private router: Router) {
-    this.sub = olympicService.olympics.subscribe(olympics => this.olympics = olympics);
+  constructor(private olympicService: OlympicService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.sub = this.olympicService.olympics.subscribe(olympics => this.olympics = olympics);
   }
 
   ngOnDestroy(): void {

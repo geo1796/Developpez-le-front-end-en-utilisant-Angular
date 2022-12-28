@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.olympicsSub = this.olympicService.olympics.subscribe(olympics => this.olympics = olympics);
     this.errorSub = this.olympicService.hasError.subscribe(hasError => {
       this.hasError = hasError;
-      console.log(hasError)
     });
   }
 
